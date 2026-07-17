@@ -21,10 +21,10 @@ spec:
         ports:
         - containerPort: 3306
          
-         #configmap integration
+         #secret integration
         envFrom:
-        - configMapRef:
-            name: bankapp-config
+        - secretRef:
+            name: bankapp-db-secret
         
         #Resource Quota integration
         resources:
