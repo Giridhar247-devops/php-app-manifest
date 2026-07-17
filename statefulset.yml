@@ -1,0 +1,36 @@
+---
+apiVersion: app/v1
+kind: StatefulSet
+metadata:
+  name: mysql
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: app-database
+  template:
+    metadata:
+      labels:
+        app: app-database
+    spec:
+      containers:
+      - name: dbcont
+        image: giridharjallepalli/phpapp:dbimage
+        ports:
+        - containerPort: 3306
+         
+         #configmap integration
+        envFrom:
+        - configMapRef:
+            name: bankapp-config
+        
+        #Resource Quota integration
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "100m"
+          limits:
+            memory: "256Mi"
+            cpu: "200m"
+
+        voulmeMounts:
