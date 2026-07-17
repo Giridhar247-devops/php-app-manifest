@@ -17,20 +17,25 @@ spec:
               kubernetes.io/metadata.name: ingress-nginx
         - podSelector:
             matchLabels:
-              kubernetes.io/metadata.name: ingress-nginx
-            ports:
-               - port: 80
+              app: nginx
+      ports:
+        - port: 80
+          protocol: TCP
   egress:
     - to:
         - podSelector:
             matchLabels:
               app: app-database
-            ports:
-               - port: 3306
+        - podSelector:
+            matchLabels:
+              app: mysql
+      ports:
+        - port: 3306
+          protocol: TCP
     - to:
         - namespaceSelector:
             matchLabels:
               kubernetes.io/metadata.name: kube-system
-            ports:
-               - port: 53
-               protocol: UDP
+      ports:
+        - port: 53
+          protocol: UDP
